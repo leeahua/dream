@@ -7,7 +7,7 @@ import java.util.Date;
 import java.io.Serializable;
 
 @Data
-public class SysOrganization implements Serializable {
+public class Organization implements Serializable {
     //
     private Integer id;
     //

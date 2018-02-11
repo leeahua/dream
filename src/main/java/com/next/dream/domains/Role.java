@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class SysRole implements Serializable{
+public class Role implements Serializable{
         // 主键
         private Integer id;
         // 角色名称
