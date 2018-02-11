@@ -2,12 +2,17 @@ package com.next.dream.domains;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 
 @Data
-public class Article implements Serializable{
-        // 
+@Entity
+public class Article{
+        @Id
+        @GeneratedValue
         private Integer id;
         // 标题
         private String title;
@@ -23,9 +28,7 @@ public class Article implements Serializable{
         private String content;
         // 文章状态
         private Integer status;
-        // 
         private Date createTime;
-        // 
         private Date updateTime;
         // 文章概要
         private String summary;

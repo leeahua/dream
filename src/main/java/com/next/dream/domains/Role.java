@@ -1,18 +1,20 @@
 package com.next.dream.domains;
 
 import lombok.Data;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+
 @Data
+@Entity
 public class Role implements Serializable{
-        // 主键
+        @Id
+        @GeneratedValue
         private Integer id;
-        // 角色名称
         private String role;
-        // 描述
         private String description;
-        // 对应的资源id
         private String resourceIds;
         private Integer available;
         public Integer getId() {

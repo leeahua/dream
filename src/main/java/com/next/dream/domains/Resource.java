@@ -2,26 +2,22 @@ package com.next.dream.domains;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
-public class SysResource implements Serializable{
-        // 
+@Entity
+public class Resource implements Serializable{
+        @Id
+        @GeneratedValue
         private Integer id;
-        // 
         private String name;
-        // 
         private String type;
-        // 
         private String url;
-        // 
         private Integer parentId;
-        // 
         private String parentIds;
-        // 
         private String permission;
-        // 
         private Integer available;
 }

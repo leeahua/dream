@@ -2,11 +2,17 @@ package com.next.dream.domains;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
+@Entity
 public class User implements Serializable{
         // 主键ID
+        @Id
+        @GeneratedValue
         private Integer id;
         // 用户名
         private String username;

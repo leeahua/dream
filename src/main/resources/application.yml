@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: sonar
+    active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
