@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
@@ -21,5 +22,7 @@ public class Category implements Serializable{
         private String parentIds;
         // 状态（0 不可用，1可用）
         private Integer status;
+        private Date createTime;
+        private Date updateTime;
 
 }

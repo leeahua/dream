@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
@@ -26,5 +27,9 @@ public class User implements Serializable{
         private Integer status;
         // 邮箱
         private String email;
+        //创建时间
+        private Date createTime;
+        //更新时间
+        private Date updateTime;
 
 }
