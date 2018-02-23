@@ -19,5 +19,5 @@ public interface UserService {
      * @param password
      * @return
      * */
-    public ResultVO login(String username, String password);
+    ResultVO login(String username, String password);
 }

@@ -11,7 +11,8 @@ import lombok.Getter;
  */
 @Getter
 public enum UserStatusEnum {
-    NORMAL(0,"普通用户");
+    NORMAL(0,"普通用户"),
+    ILLEGAL(1,"非法用户");
     private Integer code;
     private String msg;
     UserStatusEnum(Integer code,String msg) {

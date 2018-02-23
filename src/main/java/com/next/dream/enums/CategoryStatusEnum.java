@@ -6,7 +6,7 @@ import lombok.Getter;
  * 描述：类别状态
  *
  * @author liyaohua
- * @create 2018/2/12
+ * @date 2018/2/12
  * @since 1.0.0
  */
 @Getter

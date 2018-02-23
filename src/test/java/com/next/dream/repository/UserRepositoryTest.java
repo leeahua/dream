@@ -29,7 +29,7 @@ public class UserRepositoryTest {
         user.setUsername("leeahuamsg@163.com");
 
         user.setSalt("123");
-        user.setPassword(MD5U);
+       // user.setPassword(MD5U);
         user.setStatus(UserStatusEnum.NORMAL.getCode());
         user.setRoleIds("1");
         user.setCreateTime(new Date());

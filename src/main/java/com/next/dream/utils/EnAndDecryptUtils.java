@@ -5,11 +5,9 @@ package com.next.dream.utils;
  * 加解密工具类<br>
  * 工具类包括：MD5加密、SHA加密、Base64加解密、DES加解密、AES加解密<br>
  *
- * @Author:chenssy
- * @date:2016年5月20日 下午4:44:51
  *
  */
-public class EncryptAndDecryptUtils {
+public class EnAndDecryptUtils {
 	
 	/**
 	 * MD5 加密
