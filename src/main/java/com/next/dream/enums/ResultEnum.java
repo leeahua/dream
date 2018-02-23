@@ -24,7 +24,8 @@ public enum ResultEnum {
     CART_EMPTY("0011", "购物车为空"),
     USER_NOT_EXISTS("0012","用户不存在"),
     USER_PASSWORD_ERROR("0013", "密码错误"),
-    USER_ILLEGAL("0014","该用户已禁用" );
+    USER_ILLEGAL("0014","该用户已禁用" ),
+    USER_EXISTS_ALREADY("0015", "用户已存在");
     private String code;
     private String message;
     ResultEnum(String code,String message){

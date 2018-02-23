@@ -13,6 +13,12 @@ public class ResultVO {
     private String msg;
     private Object data;
 
+    public ResultVO(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+    public ResultVO(){}
+
     public String getCode() {
         return code;
     }
@@ -36,4 +42,5 @@ public class ResultVO {
     public void setData(Object data) {
         this.data = data;
     }
+
 }

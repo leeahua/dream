@@ -1,5 +1,6 @@
 package com.next.dream.service;
 
+import com.next.dream.dto.UserDto;
 import com.next.dream.vo.ResultVO;
 
 import java.util.Map;
@@ -20,4 +21,11 @@ public interface UserService {
      * @return
      * */
     ResultVO login(String username, String password);
+
+    /**
+     * 注册处理
+     * @param user
+     * @return
+     * */
+    ResultVO save(UserDto user);
 }

@@ -2,6 +2,11 @@ package com.next.dream.utils;
 
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.vo.ResultVO;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * 描述：〈响应信息封装〉
@@ -11,6 +16,25 @@ import com.next.dream.vo.ResultVO;
  * @since 1.0.0
  */
 public class ResultVOUtil {
+
+    private static final Locale LOCALE = Locale.getDefault();
+
+    public static String getMsg(BindingResult result) {
+        if (result == null)
+            return "";
+        List<FieldError> allErrors = result.getFieldErrors();
+        if (allErrors == null || allErrors.isEmpty())
+            return "";
+
+        StringBuffer sb = new StringBuffer();
+        for (FieldError fieldError : allErrors) {
+            sb.append(fieldError.getField());
+            if (!Locale.CHINA.equals(LOCALE))
+                sb.append(" ");
+            sb.append(fieldError.getDefaultMessage()).append("; ");
+        }
+        return sb.toString();
+    }
 
     /**
      * @Description: <br>
