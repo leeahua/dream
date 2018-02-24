@@ -34,6 +34,19 @@ public class KeyUtil {
         Integer number = random.nextInt(900000)+100000;
         return System.currentTimeMillis()+String.valueOf(number);
     }
+    /**
+     * @Description: <生成六位注册码>
+     *
+     * @return
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/2/24 下午3:40
+     */
+    public static String randomCode(){
+        Random random = new Random();
+        Integer number = random.nextInt(900000)+100000;
+        return String.valueOf(number);
+    }
     
     
 }
