@@ -16,13 +16,13 @@ import java.util.Random;
  * 〈生成code工具类〉
  *
  * @author liyaohua
- * @create 2018/1/26
+ * create 2018/1/26
  * @since 1.0.0
  */
 public class KeyUtil {
     
     /**
-     * @Description: <br>
+     *   <br>
      *  生成唯一主键
      * @return 
      * @since  1.0.0
@@ -35,9 +35,9 @@ public class KeyUtil {
         return System.currentTimeMillis()+String.valueOf(number);
     }
     /**
-     * @Description: <生成六位注册码>
+     *   <生成六位注册码>
      *
-     * @return
+     * @return String
      * @since  1.0.0
      * @author liyaohua
      * Created On 2018/2/24 下午3:40

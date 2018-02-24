@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 /**
- * @Description: 工具类
+ *   工具类
  * @since  1.0.0
  * @author liyaohua
  * Create On 2018/1/23 下午5:54
@@ -16,7 +16,7 @@ import java.util.List;
 public class JsonUtil {
 
     /**
-     * @Description: <br>
+     *   <br>
      *  对象转成json
      * @param object
      * @return String
@@ -33,7 +33,7 @@ public class JsonUtil {
     }
     
     /**
-     * @Description: <br>
+     *   <br>
      *  json字符串转成相应的对象
      * @param jsonString
      * @return T
@@ -48,7 +48,7 @@ public class JsonUtil {
     }
     
     /**
-     * @Description: <br>
+     *   <br>
      *  解析jsonArray
      * @return 
      * @since  1.0.0

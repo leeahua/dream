@@ -37,7 +37,7 @@ public class ResultVOUtil {
     }
 
     /**
-     * @Description: <br>
+     *   <br>
      * 有返回值成功响应
      * @return
      * @since  1.0.0
@@ -53,7 +53,7 @@ public class ResultVOUtil {
         return resultVO;
     }
     /**
-     * @Description: <br>
+     *   <br>
      * 无返回值成功响应
      * @return
      * @since  1.0.0
@@ -64,7 +64,7 @@ public class ResultVOUtil {
         return success(null);
     }
     /**
-     * @Description: <br>
+     *   <br>
      *  失败响应信息
      * @return
      * @since  1.0.0
