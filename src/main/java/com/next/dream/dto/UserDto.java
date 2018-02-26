@@ -23,7 +23,6 @@ public class UserDto {
     // 密码
     @NotNull
     private String password;
-
     // 状态
     private Integer status;
     // 邮箱

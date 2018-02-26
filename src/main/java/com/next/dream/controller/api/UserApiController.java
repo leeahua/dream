@@ -1,4 +1,4 @@
-package com.next.dream.controller;
+package com.next.dream.controller.api;
 
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/user")
 @Slf4j
-public class UserController {
+public class UserApiController {
 
     @Autowired
     private UserService userService;
@@ -42,6 +42,14 @@ public class UserController {
         }
         return userService.save(user);
     }
+    @GetMapping("/checkActivateCode")
+    public ResultVO checkActivateCode(@RequestParam String username, @RequestParam String activateCode){
+        log.info("【激活用户】username:{},activateCode:{}",username,activateCode);
+        return  userService.checkCode(username,activateCode);
+
+    }
+
+
 
 
 }

@@ -11,7 +11,8 @@ import lombok.Getter;
  */
 @Getter
 public enum UserStatusEnum {
-    NORMAL(0,"普通用户"),
+    USER_UN_ACTIVICATE(0,"未激活用户"),
+    USER_NORMAL(1,"激活用户"),
     ILLEGAL(1,"非法用户");
     private Integer code;
     private String msg;

@@ -6,20 +6,15 @@ import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.enums.UserStatusEnum;
 import com.next.dream.service.UserService;
-import com.next.dream.utils.EnAndDecryptUtils;
-import com.next.dream.utils.KeyUtil;
-import com.next.dream.utils.ResultVOUtil;
-import com.next.dream.utils.SendEmailUtil;
+import com.next.dream.utils.*;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 描述：〈〉
@@ -63,10 +58,10 @@ public class UserServiceImpl implements UserService {
         if(dbUser!=null){
             return ResultVOUtil.failed(ResultEnum.USER_EXISTS_ALREADY);
         }
-        user.setStatus(UserStatusEnum.NORMAL.getCode());
+        user.setStatus(UserStatusEnum.USER_UN_ACTIVICATE.getCode());
         user.setCreateTime(new Date());
         user.setPassword(EnAndDecryptUtils.md5Encrypt(user.getPassword()));
-
+        user.setExpireTime(DateTimeUtil.addDays(new Date(),1));
         userDto.setId(user.getId());
         userDto.setStatus(user.getStatus());
         userDto.setPassword(null);
@@ -76,6 +71,26 @@ public class UserServiceImpl implements UserService {
         user.setSalt(code);
         userRepository.save(user);
         return ResultVOUtil.success(userDto);
+    }
+
+    @Override
+    public ResultVO checkCode(String username, String activateCode) {
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
+        }
+        if(user.getStatus().equals(UserStatusEnum.USER_NORMAL)){
+            return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_ALREADY);
+        }
+        int k = 0;
+        k = DateTimeUtil.compareDateTime(new Date(),user.getExpireTime(),DateTimeUtil.FORMAT_DEFAULT_DATE_TIME);
+        if(k < 0){
+            return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_CODE_EXPIRE);
+        }
+        user.setStatus(UserStatusEnum.USER_NORMAL.getCode());
+        user.setUpdateTime(new Date());
+        userRepository.save(user);
+        return ResultVOUtil.success();
     }
 
     private void sendRegisterEmail(String email, String code) {

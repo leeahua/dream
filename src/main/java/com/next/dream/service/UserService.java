@@ -18,14 +18,23 @@ public interface UserService {
      * 登陆处理
      * @param username
      * @param password
-     * @return
+     * @return ResultVO 结果集
      * */
     ResultVO login(String username, String password);
 
     /**
      * 注册处理
      * @param user
-     * @return
+     * @return 结果集
      * */
     ResultVO save(UserDto user);
+
+    /**
+     * @Description: <br>
+     *  激活用户
+     * @return ResultVO 结果集
+     * @author liyaohua
+     * Created On 2018/2/26 上午10:37
+     */
+    ResultVO checkCode(String username, String activateCode);
 }
