@@ -27,7 +27,8 @@ public enum ResultEnum {
     USER_ILLEGAL("0014","该用户已禁用" ),
     USER_EXISTS_ALREADY("0015", "用户已存在"),
     USER_ACTIVICATE_ALREADY("0016", "用户已经激活成功" ),
-    USER_ACTIVICATE_CODE_EXPIRE("0017", "验证码已经过期");
+    USER_ACTIVICATE_CODE_EXPIRE("0017", "验证码已经过期"),
+    USER_EMAIL_EXISTS_ALREADY("0018", "邮箱已经被注册");
 
     private String code;
     private String message;

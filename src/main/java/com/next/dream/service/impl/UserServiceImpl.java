@@ -84,12 +84,30 @@ public class UserServiceImpl implements UserService {
         }
         int k = 0;
         k = DateTimeUtil.compareDateTime(new Date(),user.getExpireTime(),DateTimeUtil.FORMAT_DEFAULT_DATE_TIME);
-        if(k < 0){
+        if(k > 0){
             return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_CODE_EXPIRE);
         }
         user.setStatus(UserStatusEnum.USER_NORMAL.getCode());
         user.setUpdateTime(new Date());
         userRepository.save(user);
+        return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO checkUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if(user != null){
+            return ResultVOUtil.failed(ResultEnum.USER_EXISTS_ALREADY);
+        }
+        return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO checkEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            return ResultVOUtil.failed(ResultEnum.USER_EMAIL_EXISTS_ALREADY);
+        }
         return ResultVOUtil.success();
     }
 

@@ -37,4 +37,23 @@ public interface UserService {
      * Created On 2018/2/26 上午10:37
      */
     ResultVO checkCode(String username, String activateCode);
+
+    /**
+     * @Description: <br>
+     *  校验用户名
+     * @return ResultVO  结果集
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/2/26 下午3:38
+     */
+    ResultVO checkUsername(String username);
+    /**
+     * @Description: <br>
+     *  校验邮箱是否存在
+     * @return 结果集
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/2/26 下午3:45
+     */
+    ResultVO checkEmail(String email);
 }

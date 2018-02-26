@@ -80,7 +80,7 @@ public class SendEmailUtil {
         mail.setSubject("Test Email");
         // 设置邮件内容
         mail.setHtmlMsg(
-                "<html><body><img src='http://avatar.csdn.net/A/C/A/1_jianggujin.jpg'/><div>this is a HTML email.</div></body></html>");
+                "<html><body><img src='http://localhost:3000/register/activate?username=liyaohua&activateCode=973966'/><div>点击激活.</div></body></html>");
         // 设置邮件发送时间
         mail.setSentDate(new Date());
         // 发送邮件

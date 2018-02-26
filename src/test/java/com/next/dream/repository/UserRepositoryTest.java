@@ -27,10 +27,9 @@ public class UserRepositoryTest {
         User user = new User();
         user.setEmail("leeahuamsg@163.com");
         user.setUsername("leeahuamsg@163.com");
-
         user.setSalt("123");
        // user.setPassword(MD5U);
-        user.setStatus(UserStatusEnum.NORMAL.getCode());
+        user.setStatus(UserStatusEnum.USER_UN_ACTIVICATE.getCode());
         user.setRoleIds("1");
         user.setCreateTime(new Date());
         user = userRepository.save(user);
