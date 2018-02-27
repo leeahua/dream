@@ -1,5 +1,6 @@
 package com.next.dream.controller.api;
 
+import com.lly835.bestpay.rest.type.Get;
 import com.lly835.bestpay.rest.type.Post;
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
@@ -61,8 +62,8 @@ public class UserApiController {
      * @author liyaohua
      * Created On 2018/2/26 下午3:58
      */
-    @PostMapping("/checkusername")
-    public ResultVO checkUsername(@RequestBody String username){
+    @GetMapping("/checkusername")
+    public ResultVO checkUsername(@RequestParam String username){
         log.info("【校验用户名】 接收参数 username:{}", username);
         return userService.checkUsername(username);
     }
@@ -73,8 +74,8 @@ public class UserApiController {
      * @author liyaohua
      * Created On 2018/2/26 下午3:58
      */
-    @PostMapping("/checkemail")
-    public ResultVO checkEmail(@RequestBody String email){
+    @GetMapping("/checkemail")
+    public ResultVO checkEmail(@RequestParam String email){
         log.info("【校验邮箱】 接收参数 email:{}", email);
         return userService.checkEmail(email);
     }
@@ -86,8 +87,8 @@ public class UserApiController {
      * @author liyaohua
      * Created On 2018/2/26 下午3:58
      */
-    @PostMapping("/checkactivateCode")
-    public ResultVO checkActivateCode(@RequestBody String username, @RequestBody String activateCode){
+    @GetMapping("/checkactivatecode")
+    public ResultVO checkActivateCode(@RequestParam String username, @RequestParam String activateCode){
         log.info("【激活用户】接收参数 username:{},activateCode:{}",username,activateCode);
         return  userService.checkCode(username,activateCode);
     }

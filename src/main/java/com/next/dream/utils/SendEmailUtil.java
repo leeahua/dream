@@ -4,6 +4,7 @@ import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.util.Date;
@@ -17,7 +18,6 @@ import java.util.Properties;
  * @version 1.0
  */
 public class SendEmailUtil {
-
 
     //private String host = "smtp.126.com";
     private static String host = "smtp.163.com";
@@ -80,7 +80,7 @@ public class SendEmailUtil {
         mail.setSubject("Test Email");
         // 设置邮件内容
         mail.setHtmlMsg(
-                "<html><body><img src='http://localhost:3000/register/activate?username=liyaohua&activateCode=973966'/><div>点击激活.</div></body></html>");
+                "<html><body><a href='http://localhost:3000/register/activate?username=liyaohua&activateCode=973966'>http://localhost:3000/register/activate?username=liyaohua&activateCode=973966</a><div>点击激活.</div></body></html>");
         // 设置邮件发送时间
         mail.setSentDate(new Date());
         // 发送邮件
@@ -189,5 +189,45 @@ public class SendEmailUtil {
         mail.setSentDate(new Date());
         // 发送邮件
         mail.send();
+    }
+
+    public static void sendHtmlMail(String email, String ContentMsg) throws Exception{
+        HtmlEmail mail = new HtmlEmail();
+        // 设置邮箱服务器信息
+        mail.setSmtpPort(port);
+        mail.setHostName(host);
+        // 设置密码验证器
+        mail.setAuthentication(userName, password);
+        // 设置邮件发送者
+        mail.setFrom(userName);
+        // 设置邮件接收者
+        mail.addTo(email);
+        // 设置邮件编码
+        mail.setCharset("UTF-8");
+        // 设置邮件主题
+        mail.setSubject("Test Email");
+        // 设置邮件内容
+        mail.setHtmlMsg(
+                "<html><body><a href='http://localhost:3000/register/activate?username=liyaohua&activateCode=973966'>http://localhost:3000/register/activate?username=liyaohua&activateCode=973966</a><div>点击激活.</div></body></html>");
+        // 设置邮件发送时间
+        mail.setSentDate(new Date());
+        // 发送邮件
+        mail.send();
+    }
+
+
+    public static String emaliTemplate(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>\n" +
+                "\n" +
+                "<body>\n" +
+                "    \"亲爱的\" $username$\"：<br/>感谢您在我站注册了新帐号。<br/>请点击链接激活您的帐号。<br/>\n" +
+                "<a href='$urllink$' target=\n" +
+                "        '_blank'>$urllink$</a><br/>\n" +
+                "如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。\"\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>");
+        return sb.toString();
     }
 }

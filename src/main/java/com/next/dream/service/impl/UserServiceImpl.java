@@ -5,6 +5,7 @@ import com.next.dream.domains.User;
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.enums.UserStatusEnum;
+import com.next.dream.service.EmailService;
 import com.next.dream.service.UserService;
 import com.next.dream.utils.*;
 import com.next.dream.vo.ResultVO;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public ResultVO login(String username, String password) {
@@ -67,9 +71,9 @@ public class UserServiceImpl implements UserService {
         userDto.setPassword(null);
         //发送邮件
         String code = KeyUtil.randomCode();
-        sendRegisterEmail(user.getEmail(),code);
         user.setSalt(code);
         userRepository.save(user);
+        sendRegisterEmail(user);
         return ResultVOUtil.success(userDto);
     }
 
@@ -79,7 +83,7 @@ public class UserServiceImpl implements UserService {
         if(user == null){
             return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
         }
-        if(user.getStatus().equals(UserStatusEnum.USER_NORMAL)){
+        if(user.getStatus()==UserStatusEnum.USER_NORMAL.getCode()){
             return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_ALREADY);
         }
         int k = 0;
@@ -111,12 +115,18 @@ public class UserServiceImpl implements UserService {
         return ResultVOUtil.success();
     }
 
-    private void sendRegisterEmail(String email, String code) {
+    private void sendRegisterEmail(User user) {
         try {
-            SendEmailUtil.sendTextMail(email,code);
+            String checkCode = EnAndDecryptUtils.md5Encrypt(user.getUsername()+":"+user.getSalt());
+            String urlLink = emailService.getRegisterUrlLink();
+            urlLink = urlLink.replace("$username$",user.getUsername()).replace("$code$",checkCode);
+            String htmlContent = SendEmailUtil.emaliTemplate();
+            htmlContent = htmlContent.replace("$useranme$",user.getUsername());
+            htmlContent = htmlContent.replace("$urllink$",urlLink);
+            emailService.sendHtmlMail(user.getEmail(),"账号激活通知邮件",htmlContent);
         } catch (Exception e) {
-            log.error("邮件发送失败!email:{}",email,e);
+            log.error("邮件发送失败!email:{}",user.getEmail(),e);
         }
-        log.info("验证邮件发送成功！email:{}",email);
+        log.info("验证邮件发送成功！email:{}",user.getEmail());
     }
 }

@@ -1,11 +1,11 @@
 spring:
   profiles:
-    active: dev
+    active: test
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 1q2w3e4r
-    url: jdbc:mysql://127.0.0.1:3306/dream?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://:3306/dream?characterEncoding=utf-8&useSSL=false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   jpa:
@@ -14,7 +14,14 @@ spring:
 banner:
   location: static/banner.txt
   charset: UTF-8
-
+email:
+  registerActivicateLinkUrl: http://localhost:3000/register/activate?username=$username$&activateCode=$code$
+  username: customerservice@smiletoword.com
+  password: 1q2w3e4r
+  host: smtp.ym.163.com
+  port: 25
+server:
+  port: 8080
 
 ---
 spring:
