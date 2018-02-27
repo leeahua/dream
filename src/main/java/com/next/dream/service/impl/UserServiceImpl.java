@@ -21,7 +21,6 @@ import java.util.Date;
  * 描述：〈〉
  *
  * @author liyaohua
- * @create 2018/2/22
  * @since 1.0.0
  */
 @Service
@@ -83,11 +82,13 @@ public class UserServiceImpl implements UserService {
         if(user == null){
             return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
         }
-        if(user.getStatus()==UserStatusEnum.USER_NORMAL.getCode()){
+        if(user.getStatus() == UserStatusEnum.USER_NORMAL.getCode()){
             return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_ALREADY);
         }
-        int k = 0;
-        k = DateTimeUtil.compareDateTime(new Date(),user.getExpireTime(),DateTimeUtil.FORMAT_DEFAULT_DATE_TIME);
+        if(!EnAndDecryptUtils.md5Encrypt(username+":"+user.getSalt()).equals(activateCode)){
+            return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_CODE_UNMATCH);
+        }
+        int k = DateTimeUtil.compareDateTime(new Date(),user.getExpireTime(),DateTimeUtil.FORMAT_DEFAULT_DATE_TIME);
         if(k > 0){
             return ResultVOUtil.failed(ResultEnum.USER_ACTIVICATE_CODE_EXPIRE);
         }

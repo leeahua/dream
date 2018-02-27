@@ -6,7 +6,6 @@ import lombok.Getter;
  * 描述：结果响应
  *
  * @author liyaohua
- * @create 2018/1/26
  * @since 1.0.0
  */
 @Getter
@@ -28,7 +27,8 @@ public enum ResultEnum {
     USER_EXISTS_ALREADY("0015", "用户已存在"),
     USER_ACTIVICATE_ALREADY("0016", "用户已经激活成功" ),
     USER_ACTIVICATE_CODE_EXPIRE("0017", "验证码已经过期"),
-    USER_EMAIL_EXISTS_ALREADY("0018", "邮箱已经被注册");
+    USER_EMAIL_EXISTS_ALREADY("0018", "邮箱已经被注册"),
+    USER_ACTIVICATE_CODE_UNMATCH("0019", "用户名和激活码不匹配");
 
     private String code;
     private String message;
