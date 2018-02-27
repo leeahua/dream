@@ -29,13 +29,13 @@ public class EmailServiceImplTest {
 
     @Test
     public void sendHtmlMail() {
-        try {
+       /* try {
             String username = "我是大神";
             String urlLink = "https://www.baidu.com";
             String content = SendEmailUtil.emaliTemplate().replace("$username$",username).replace("$urllink$",urlLink);
-            emailService.sendHtmlMail("396317263@qq.com","html页面", content);
+            //emailService.sendHtmlMail("396317263@qq.com","html页面", content);
         } catch (EmailException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

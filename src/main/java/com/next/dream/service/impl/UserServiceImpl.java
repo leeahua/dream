@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
             String urlLink = emailService.getRegisterUrlLink();
             urlLink = urlLink.replace("$username$",user.getUsername()).replace("$code$",checkCode);
             String htmlContent = SendEmailUtil.emaliTemplate();
-            htmlContent = htmlContent.replace("$useranme$",user.getUsername());
+            htmlContent = htmlContent.replace("$username$",user.getUsername());
             htmlContent = htmlContent.replace("$urllink$",urlLink);
             emailService.sendHtmlMail(user.getEmail(),"账号激活通知邮件",htmlContent);
         } catch (Exception e) {
