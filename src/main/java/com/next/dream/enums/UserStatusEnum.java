@@ -13,7 +13,7 @@ import lombok.Getter;
 public enum UserStatusEnum {
     USER_UN_ACTIVICATE(0,"未激活用户"),
     USER_NORMAL(1,"激活用户"),
-    ILLEGAL(1,"非法用户");
+    ILLEGAL(2,"非法用户");
     private Integer code;
     private String msg;
     UserStatusEnum(Integer code,String msg) {
