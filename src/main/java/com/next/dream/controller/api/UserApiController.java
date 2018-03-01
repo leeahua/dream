@@ -31,15 +31,17 @@ public class UserApiController {
     private UserService userService;
     /**
      * 登陆处理
-     * @param username 用户名
-     * @param password  密码
+     * @param userDto
      * @author liyaohua
      * Created On 2018/2/26 下午3:58
      */
     @PostMapping("/login")
-    public ResultVO login(@RequestParam String username, @RequestParam String password){
-        log.info("【登陆】 接收参数:{}",username);
-        return userService.login(username,password);
+    public ResultVO login(@RequestBody @Valid UserDto userDto,BindingResult result){
+        log.info("【登陆】 接收参数:{}",JsonUtil.toJson(userDto));
+        if(result.hasErrors()){
+            return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
+        }
+        return userService.login(userDto.getUsername(),userDto.getPassword());
     }
 
     /**

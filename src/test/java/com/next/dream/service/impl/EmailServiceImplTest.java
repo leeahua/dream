@@ -20,11 +20,11 @@ public class EmailServiceImplTest {
 
     @Test
     public void sendTextMail() {
-        try {
+       /* try {
             emailService.sendTextMail("396317263@qq.com","测试","heool");
         } catch (EmailException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Test

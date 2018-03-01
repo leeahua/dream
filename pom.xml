@@ -28,6 +28,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!--打war包的时候丢弃springboot集成的tomcat包-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -35,12 +41,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -92,20 +92,27 @@
 	</dependencies>
 
 	<build>
-		<finalName>dream</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-            <!-- maven打包的时候告诉maven不需要web.xml,否刚会报找不到web.xml错误 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+            <!--&lt;!&ndash; maven打包的时候告诉maven不需要web.xml,否刚会报找不到web.xml错误 &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!-- jar打包插件, 设定jar包名称不带版本号 -->
+                    &lt;!&ndash; jar打包插件, 设定jar包名称不带版本号 &ndash;&gt;
                     <warName>${project.artifactId}</warName>
                 </configuration>
             </plugin>
@@ -123,6 +130,7 @@
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>
+			-->
         </plugins>
 	</build>
 
