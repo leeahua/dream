@@ -54,6 +54,16 @@ public class UserApiController {
         return resultVO;
     }
 
+    @PostMapping("/loginout")
+    public ResultVO loginout(@RequestBody UserDto userDto,HttpServletRequest request){
+        log.info("【登出】参数信息：",JsonUtil.toJson(userDto));
+        if(userDto.getUsername() == null || userDto.getToken() ==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        request.getSession().removeAttribute(userDto.getToken());
+        return ResultVOUtil.success();
+    }
+
     @PostMapping("/checklogin")
     public ResultVO checkLogin(@RequestBody UserDto userDto,HttpServletRequest request){
         log.info("【校验用户登陆】 参数信息：{}:",JsonUtil.toJson(userDto));
