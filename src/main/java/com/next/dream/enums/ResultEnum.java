@@ -28,7 +28,10 @@ public enum ResultEnum {
     USER_ACTIVICATE_ALREADY("0016", "用户已经激活成功" ),
     USER_ACTIVICATE_CODE_EXPIRE("0017", "验证码已经过期"),
     USER_EMAIL_EXISTS_ALREADY("0018", "邮箱已经被注册"),
-    USER_ACTIVICATE_CODE_UNMATCH("0019", "用户名和激活码不匹配");
+    USER_ACTIVICATE_CODE_UNMATCH("0019", "用户名和激活码不匹配"),
+    USER_UNLOGIN_ERROR("0020", "用户未登陆"),
+    SERVICE_EXCEPTION("0021", "服务器内部异常"),
+    USER_TOKEN_UNMATCH("0022", "用户token不匹配");
 
     private String code;
     private String message;

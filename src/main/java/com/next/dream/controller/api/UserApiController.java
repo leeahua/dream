@@ -1,10 +1,9 @@
 package com.next.dream.controller.api;
 
-import com.lly835.bestpay.rest.type.Get;
-import com.lly835.bestpay.rest.type.Post;
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.UserService;
+import com.next.dream.utils.EnAndDecryptUtils;
 import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -36,12 +36,39 @@ public class UserApiController {
      * Created On 2018/2/26 下午3:58
      */
     @PostMapping("/login")
-    public ResultVO login(@RequestBody @Valid UserDto userDto,BindingResult result){
+    public ResultVO login(@RequestBody @Valid UserDto userDto, BindingResult result, HttpServletRequest request){
         log.info("【登陆】 接收参数:{}",JsonUtil.toJson(userDto));
         if(result.hasErrors()){
             return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
         }
-        return userService.login(userDto.getUsername(),userDto.getPassword());
+        //判断是否已经登陆过
+        String token = EnAndDecryptUtils.md5Encrypt(userDto.getUsername());
+        UserDto user = (UserDto) request.getSession().getAttribute(token);
+        if(user != null){
+            return ResultVOUtil.success(user);
+        }
+        ResultVO resultVO = userService.login(userDto.getUsername(),userDto.getPassword(),token);
+        if(resultVO.getCode().equals(ResultEnum.SUCCESS.getCode())){
+            request.getSession().setAttribute(token,userDto);
+        }
+        return resultVO;
+    }
+
+    @PostMapping("/checklogin")
+    public ResultVO checkLogin(@RequestBody UserDto userDto,HttpServletRequest request){
+        log.info("【校验用户登陆】 参数信息：{}:",JsonUtil.toJson(userDto));
+        if(userDto.getUsername() == null || userDto.getToken() ==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        if(!EnAndDecryptUtils.md5Encrypt(userDto.getUsername()).equals(userDto.getToken())){
+            return ResultVOUtil.failed(ResultEnum.USER_TOKEN_UNMATCH);
+        }
+        UserDto user = (UserDto)request.getSession().getAttribute(userDto.getToken());
+
+        if(user!=null){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
     }
 
     /**

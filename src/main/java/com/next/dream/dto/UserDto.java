@@ -2,10 +2,7 @@ package com.next.dream.dto;
 
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * 描述：〈用户信息传输类〉
@@ -27,4 +24,6 @@ public class UserDto {
     private Integer status;
     // 邮箱
     private String email;
+
+    private String token;
 }

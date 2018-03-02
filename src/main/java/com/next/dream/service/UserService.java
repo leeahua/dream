@@ -3,8 +3,6 @@ package com.next.dream.service;
 import com.next.dream.dto.UserDto;
 import com.next.dream.vo.ResultVO;
 
-import java.util.Map;
-
 /**
  * 描述：〈用户业务逻辑处理〉
  *
@@ -20,7 +18,7 @@ public interface UserService {
      * @param password
      * @return ResultVO 结果集
      * */
-    ResultVO login(String username, String password);
+    ResultVO login(String username, String password,String token);
 
     /**
      * 注册处理

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -38,4 +39,15 @@ public class ArticleRepositoryTest {
         System.out.println(JsonUtil.toJson(article));
     }
 
+    @Test
+    public void findByAuthorId() {
+        List<Article> articles = articleRepository.findByAuthorId(1);
+        System.out.println(JsonUtil.toJson(articles));
+    }
+
+    @Test
+    public void findByCateIds() {
+        List<Article> articles = articleRepository.findByCateIds("1");
+        System.out.println(JsonUtil.toJson(articles));
+    }
 }

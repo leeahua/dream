@@ -34,8 +34,9 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
 
     @Override
-    public ResultVO login(String username, String password) {
+    public ResultVO login(String username, String password,String token) {
         User user = userRepository.findByUsername(username);
+
         if(user == null){
             return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
         }
@@ -48,6 +49,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user,userDto);
         userDto.setPassword(null);
+        userDto.setToken(token);
         return ResultVOUtil.success(userDto);
     }
 
