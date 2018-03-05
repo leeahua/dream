@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @version 1.0
  */
 @Data
-public class UserDto {
+public class UserDto extends BaseRespDto{
     private Integer id;
     // 用户名
     @NotNull
@@ -25,5 +25,5 @@ public class UserDto {
     // 邮箱
     private String email;
 
-    private String token;
+
 }

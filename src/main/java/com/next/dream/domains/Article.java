@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
-import java.io.Serializable;
 
 @Data
 @Entity
@@ -22,7 +21,7 @@ public class Article{
         private String cateIds;
         // 作者名称
         private String authorName;
-        // 
+        //
         private Integer authorId;
         // 文章内容
         private String content;
@@ -32,6 +31,10 @@ public class Article{
         private Date updateTime;
         // 文章概要
         private String summary;
+        private Integer viewCount;
+        private Integer commentCount;
+
+
 
 
 }

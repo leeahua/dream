@@ -31,7 +31,8 @@ public enum ResultEnum {
     USER_ACTIVICATE_CODE_UNMATCH("0019", "用户名和激活码不匹配"),
     USER_UNLOGIN_ERROR("0020", "用户未登陆"),
     SERVICE_EXCEPTION("0021", "服务器内部异常"),
-    USER_TOKEN_UNMATCH("0022", "用户token不匹配");
+    USER_TOKEN_UNMATCH("0022", "用户token不匹配"),
+    ARTICLE_NOT_EXISTS("0023", "对应文章不存在");
 
     private String code;
     private String message;

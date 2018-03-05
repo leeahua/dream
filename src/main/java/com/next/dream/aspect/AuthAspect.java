@@ -1,5 +1,6 @@
 package com.next.dream.aspect;
 
+import com.next.dream.dto.BaseRespDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
@@ -11,8 +12,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.Set;
 
 /**
  * 描述：〈身份拦截〉
- *
+ * 对于需要登陆拦截的地方进行拦截
  * @author liyaohua
  * create on 2018/3/1
  * @version 1.0
@@ -37,7 +36,7 @@ public class AuthAspect {
      * @author liyaohua
      * Created On 2018/3/1 下午5:29
      */
-    @Pointcut("execution(* com.next.dream.controller.api.ArticleController.*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut("execution(* com.next.dream.controller.api.ArticleController.*(..)) && @annotation(com.next.dream.annotation.LoginAnnotation)")
     public void authorControllerPointcut(){}
 
     /**
@@ -52,26 +51,21 @@ public class AuthAspect {
         Method method = methodSignature.getMethod();
         //获取被拦截的方法的名字
         String methodName = method.getName();
-
         Set<Object> params = new LinkedHashSet<>();
-
         log.info("请求开始，请求方法：{}",methodName);
-
         Object result = null;
-
         Object[] args = proceedingJoinPoint.getArgs();
-
         for(Object obj : args){
             if(obj instanceof Map<?,?>){
                 Map<String,Object> map = (Map<String,Object>)obj;
                 params.add(map);
-            }else if(obj instanceof HttpServletRequest){
-                HttpServletRequest request = (HttpServletRequest)obj;
-                HttpSession httpSession = request.getSession();
-                if(httpSession.getAttribute("user")==null){
+            }else if(obj instanceof BaseRespDto){
+                BaseRespDto baseRespDto = (BaseRespDto) obj;
+                if(baseRespDto.getToken()==null){
                     result = ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
                     break;
                 }
+
             }else{
                 params.add(args);
             }

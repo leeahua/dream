@@ -1,6 +1,8 @@
 package com.next.dream.service;
 
 import com.next.dream.domains.Article;
+import com.next.dream.dto.ArticleDto;
+import com.next.dream.vo.ResultVO;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ public interface ArticleService {
     List<Article> findByAuthorId(Integer authorId);
 
     List<Article> findByCateIds(String cateId);
+
+    Article save(ArticleDto articleDto);
+
+    ResultVO delete(Integer id);
 }
