@@ -32,7 +32,8 @@ public enum ResultEnum {
     USER_UNLOGIN_ERROR("0020", "用户未登陆"),
     SERVICE_EXCEPTION("0021", "服务器内部异常"),
     USER_TOKEN_UNMATCH("0022", "用户token不匹配"),
-    ARTICLE_NOT_EXISTS("0023", "对应文章不存在");
+    ARTICLE_NOT_EXISTS("0023", "对应文章不存在"),
+    CATEGORY_NOT_EXISTS("0024", "类别不存在");
 
     private String code;
     private String message;

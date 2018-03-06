@@ -12,7 +12,9 @@ import lombok.Getter;
 @Getter
 public enum CategoryStatusEnum {
     UN_ACTIVITY(0,"未启用"),
-    ACTIVITY(1,"已启用");
+    ACTIVITY(1,"已启用"),
+    DISABLED(2,"禁用");
+
 
     private Integer code;
     private String msg;

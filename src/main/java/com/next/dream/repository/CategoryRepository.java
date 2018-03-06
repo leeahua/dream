@@ -3,6 +3,8 @@ package com.next.dream.repository;
 import com.next.dream.domains.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * 描述：〈类别〉
  *
@@ -12,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CategoryRepository extends JpaRepository<Category,Integer>{
 
+    List<Category> findAll();
 
+    List<Category> findByStatus(Integer status);
 }
