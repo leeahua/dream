@@ -1,6 +1,5 @@
 package com.next.dream.repository;
 
-import com.next.dream.Repository.CategoryRepository;
 import com.next.dream.domains.Category;
 import com.next.dream.enums.CategoryStatusEnum;
 import com.next.dream.utils.JsonUtil;
@@ -12,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)

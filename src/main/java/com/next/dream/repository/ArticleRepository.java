@@ -1,4 +1,4 @@
-package com.next.dream.Repository;
+package com.next.dream.repository;
 
 import com.next.dream.domains.Article;
 import org.springframework.data.jpa.repository.JpaRepository;

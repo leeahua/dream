@@ -1,6 +1,5 @@
 package com.next.dream.repository;
 
-import com.next.dream.Repository.ArticleRepository;
 import com.next.dream.domains.Article;
 import com.next.dream.enums.ArticleStatusEnum;
 import com.next.dream.utils.JsonUtil;
@@ -13,8 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

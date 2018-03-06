@@ -1,6 +1,6 @@
 package com.next.dream.service.impl;
 
-import com.next.dream.Repository.UserRepository;
+import com.next.dream.repository.UserRepository;
 import com.next.dream.domains.User;
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;

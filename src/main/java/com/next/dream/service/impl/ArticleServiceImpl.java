@@ -1,6 +1,6 @@
 package com.next.dream.service.impl;
 
-import com.next.dream.Repository.ArticleRepository;
+import com.next.dream.repository.ArticleRepository;
 import com.next.dream.domains.Article;
 import com.next.dream.dto.ArticleDto;
 import com.next.dream.enums.ResultEnum;
@@ -44,7 +44,12 @@ public class ArticleServiceImpl implements ArticleService{
         Article article = new Article();
         BeanUtils.copyProperties(articleDto,article);
         article.setCreateTime(new Date());
-        article.setSummary(article.getContent().substring(0,50));
+        if(article.getContent().length()<10){
+            article.setSummary(article.getContent());
+        }else{
+            article.setSummary(article.getContent().substring(0,10));
+        }
+
         return articleRepository.save(article);
     }
 
@@ -56,5 +61,10 @@ public class ArticleServiceImpl implements ArticleService{
         }
         articleRepository.delete(article);
         return ResultVOUtil.success();
+    }
+
+    @Override
+    public Article findById(Integer id) {
+        return articleRepository.findOne(id);
     }
 }

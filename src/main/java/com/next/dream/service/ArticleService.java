@@ -20,4 +20,6 @@ public interface ArticleService {
     Article save(ArticleDto articleDto);
 
     ResultVO delete(Integer id);
+    
+    Article findById(Integer id);
 }

@@ -1,9 +1,7 @@
-package com.next.dream.Repository;
+package com.next.dream.repository;
 
 import com.next.dream.domains.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  * 描述：〈类别〉
