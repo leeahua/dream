@@ -30,7 +30,6 @@ public class CategoryServiceImplTest {
         log.info(JsonUtil.toJson(categoryService.findByStatus(CategoryStatusEnum.DISABLED.getCode())));
         Assert.assertNotNull(categoryService.findByStatus(CategoryStatusEnum.DISABLED.getCode()));
     }
-
     @Test
     public void disableCategory() {
         log.info(JsonUtil.toJson(categoryService.disableCategory(5)));
