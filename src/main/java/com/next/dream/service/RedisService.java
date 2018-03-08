@@ -23,7 +23,7 @@ public class RedisService {
     private RedisTemplate redisTemplate;
 
 
-    public void set(String key,  Object obj, TimeUnit outTime){
+    public void set(String key,  Object obj,long timeout, TimeUnit outTime){
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, obj, 10, TimeUnit.SECONDS);
     }
@@ -31,6 +31,13 @@ public class RedisService {
     public Object get(String key){
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         return operations.get(key);
+    }
+
+    public  void remove(String key){
+        if(redisTemplate.hasKey(key)) {
+            redisTemplate.delete(key);
+            log.info("key:{},已从缓存中删除！"+key);
+        }
     }
 
 }

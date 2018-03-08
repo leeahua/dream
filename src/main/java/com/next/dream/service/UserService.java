@@ -28,6 +28,13 @@ public interface UserService {
     ResultVO save(UserDto user);
 
     /**
+     * 注册处理
+     * @param user
+     * @return 结果集
+     * */
+    ResultVO update(UserDto user);
+
+    /**
      * @Description: <br>
      *  激活用户
      * @return ResultVO 结果集

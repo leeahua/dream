@@ -3,6 +3,7 @@ package com.next.dream.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 描述：〈用户信息传输类〉
@@ -12,7 +13,8 @@ import javax.validation.constraints.NotNull;
  * @version 1.0
  */
 @Data
-public class UserDto extends BaseRespDto{
+public class UserDto extends BaseRespDto implements Serializable{
+    private static final long serialVersionUID = 2422109234464501490L;
     private Integer id;
     // 用户名
     @NotNull

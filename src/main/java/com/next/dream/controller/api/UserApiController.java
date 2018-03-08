@@ -1,7 +1,9 @@
 package com.next.dream.controller.api;
 
+import com.next.dream.annotation.LoginAnnotation;
 import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
+import com.next.dream.service.RedisService;
 import com.next.dream.service.UserService;
 import com.next.dream.utils.EnAndDecryptUtils;
 import com.next.dream.utils.JsonUtil;
@@ -29,6 +31,9 @@ public class UserApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisService redisService;
     /**
      * 登陆处理
      * @param userDto
@@ -43,29 +48,28 @@ public class UserApiController {
         }
         //判断是否已经登陆过
         String token = EnAndDecryptUtils.md5Encrypt(userDto.getUsername());
-        UserDto user = (UserDto) request.getSession().getAttribute(token);
+        UserDto user = (UserDto) redisService.get(token);
         if(user != null){
             return ResultVOUtil.success(user);
         }
         ResultVO resultVO = userService.login(userDto.getUsername(),userDto.getPassword(),token);
-        if(resultVO.getCode().equals(ResultEnum.SUCCESS.getCode())){
-            request.getSession().setAttribute(token,userDto);
-        }
         return resultVO;
     }
 
     @PostMapping("/loginout")
-    public ResultVO loginout(@RequestBody UserDto userDto,HttpServletRequest request){
+    @LoginAnnotation
+    public ResultVO loginout(@RequestBody UserDto userDto){
         log.info("【登出】参数信息：",JsonUtil.toJson(userDto));
         if(userDto.getUsername() == null || userDto.getToken() ==null){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
-        request.getSession().removeAttribute(userDto.getToken());
+        redisService.remove(userDto.getToken());
         return ResultVOUtil.success();
     }
 
     @PostMapping("/checklogin")
-    public ResultVO checkLogin(@RequestBody UserDto userDto,HttpServletRequest request){
+    @LoginAnnotation
+    public ResultVO checkLogin(@RequestBody UserDto userDto){
         log.info("【校验用户登陆】 参数信息：{}:",JsonUtil.toJson(userDto));
         if(userDto.getUsername() == null || userDto.getToken() ==null){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
@@ -73,7 +77,7 @@ public class UserApiController {
         if(!EnAndDecryptUtils.md5Encrypt(userDto.getUsername()).equals(userDto.getToken())){
             return ResultVOUtil.failed(ResultEnum.USER_TOKEN_UNMATCH);
         }
-        UserDto user = (UserDto)request.getSession().getAttribute(userDto.getToken());
+        UserDto user = (UserDto)redisService.get(userDto.getToken());
 
         if(user!=null){
             return ResultVOUtil.success();
@@ -130,6 +134,23 @@ public class UserApiController {
     public ResultVO checkActivateCode(@RequestParam String username, @RequestParam String activateCode){
         log.info("【激活用户】接收参数 username:{},activateCode:{}",username,activateCode);
         return  userService.checkCode(username,activateCode);
+    }
+
+    /**
+     *
+     * 更新用户
+     * @return
+     * @author liyaohua
+     * Created On 2018/3/8 下午5:02
+     */
+    @PostMapping("/update")
+    @LoginAnnotation
+    public ResultVO update(@RequestBody UserDto userDto){
+        log.info("【更新用户】接收参数 :{}",JsonUtil.toJson(userDto));
+        if(userDto.getUsername()==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        return userService.update(userDto);
     }
 
 }

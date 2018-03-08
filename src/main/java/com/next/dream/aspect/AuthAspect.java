@@ -2,6 +2,7 @@ package com.next.dream.aspect;
 
 import com.next.dream.dto.BaseRespDto;
 import com.next.dream.enums.ResultEnum;
+import com.next.dream.service.RedisService;
 import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -28,6 +30,9 @@ import java.util.Set;
 @Component
 @Slf4j
 public class AuthAspect {
+
+    @Autowired
+    private RedisService redisService;
 
     /**
      * @Description: <br>
@@ -61,10 +66,15 @@ public class AuthAspect {
                 params.add(map);
             }else if(obj instanceof BaseRespDto){
                 BaseRespDto baseRespDto = (BaseRespDto) obj;
-                if(baseRespDto.getToken()==null){
+                if(baseRespDto.getToken()==null ){
                     result = ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
                     break;
                 }
+                if(redisService.get(baseRespDto.getToken())==null){
+                    result = ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
+                    break;
+                }
+
 
             }else{
                 params.add(args);

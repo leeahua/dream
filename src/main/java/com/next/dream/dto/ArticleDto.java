@@ -3,6 +3,7 @@ package com.next.dream.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,8 @@ import java.util.Date;
  * @version 1.0
  */
 @Data
-public class ArticleDto extends BaseRespDto{
+public class ArticleDto extends BaseRespDto implements Serializable{
+    private static final long serialVersionUID = 3963688354068741748L;
     private Integer id;
     // 标题
     @NotNull
