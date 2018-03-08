@@ -9,6 +9,7 @@ import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -62,11 +64,14 @@ public class ArticleController {
      */
     @PostMapping("/delete")
     @LoginAnnotation
-    public ResultVO delete(@RequestBody ArticleDto articleDto){
+    public ResultVO delete(@RequestBody ArticleDto articleDto, HttpServletRequest request){
         log.info("【删除文章】 参数信息：{}",JsonUtil.toJson(articleDto));
-        if(articleDto.getId()==null){
+        if(articleDto.getId()==null || StringUtils.isBlank(articleDto.getToken())
+                ||StringUtils.isBlank(articleDto.getAuthorName())){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
+       // UserDto user = (UserDto)request.getSession().getAttribute(articleDto.getAuthorName());
+
         return articleService.delete(articleDto.getId());
     }
 
