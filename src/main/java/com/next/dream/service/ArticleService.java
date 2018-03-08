@@ -22,4 +22,6 @@ public interface ArticleService {
     ResultVO delete(Integer id);
     
     Article findById(Integer id);
+
+    ResultVO findBestList();
 }

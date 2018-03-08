@@ -67,4 +67,10 @@ public class ArticleServiceImpl implements ArticleService{
     public Article findById(Integer id) {
         return articleRepository.findOne(id);
     }
+
+    @Override
+    public ResultVO findBestList() {
+        List<Article> data = articleRepository.findAll();
+        return ResultVOUtil.success(data);
+    }
 }

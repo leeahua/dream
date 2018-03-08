@@ -3,8 +3,10 @@ package com.next.dream.controller.api;
 import com.next.dream.annotation.LoginAnnotation;
 import com.next.dream.domains.Article;
 import com.next.dream.dto.ArticleDto;
+import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.ArticleService;
+import com.next.dream.service.RedisService;
 import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
@@ -12,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,6 +34,25 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private RedisService redisService;
+
+
+
+
+    /**
+     * 推荐文章列表
+     * @return
+     * @author liyaohua
+     * Created On 2018/3/8 下午5:52
+     */
+    @GetMapping("/list")
+    public ResultVO list(){
+        log.info("文章列表查询");
+        return articleService.findBestList();
+    }
+
 
     /**
      * 添加文章
@@ -70,8 +88,10 @@ public class ArticleController {
                 ||StringUtils.isBlank(articleDto.getAuthorName())){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
-       // UserDto user = (UserDto)request.getSession().getAttribute(articleDto.getAuthorName());
-
+        UserDto user = (UserDto)redisService.get(articleDto.getToken());
+        if(articleDto.getAuthorId()!=user.getId()){
+            return ResultVOUtil.failed(ResultEnum.USER_TOKEN_UNMATCH);
+        }
         return articleService.delete(articleDto.getId());
     }
 
