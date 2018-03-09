@@ -43,13 +43,14 @@ public class ArticleServiceImpl implements ArticleService{
     public Article save(ArticleDto articleDto) {
         Article article = new Article();
         BeanUtils.copyProperties(articleDto,article);
-        article.setCreateTime(new Date());
-        if(article.getContent().length()<10){
-            article.setSummary(article.getContent());
-        }else{
-            article.setSummary(article.getContent().substring(0,10));
+        if(articleDto.getId()==null) {
+            article.setCreateTime(new Date());
+            if (article.getContent().length() < 10) {
+                article.setSummary(article.getContent());
+            } else {
+                article.setSummary(article.getContent().substring(0, 10));
+            }
         }
-
         return articleRepository.save(article);
     }
 

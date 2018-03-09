@@ -29,7 +29,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/article")
 @Slf4j
-public class ArticleController {
+public class ArticleApiController {
 
 
     @Autowired
@@ -37,9 +37,6 @@ public class ArticleController {
 
     @Autowired
     private RedisService redisService;
-
-
-
 
     /**
      * 推荐文章列表
@@ -52,8 +49,6 @@ public class ArticleController {
         log.info("文章列表查询");
         return articleService.findBestList();
     }
-
-
     /**
      * 添加文章
      * @return
@@ -72,6 +67,21 @@ public class ArticleController {
         articleDto.setId(article.getId());
         articleDto.setSummary(article.getSummary());
         return ResultVOUtil.success(articleDto);
+    }
+
+    /**
+     * 更新文章
+     *
+     * */
+    @RequestMapping("/modify")
+    @LoginAnnotation
+    public ResultVO modify(ArticleDto articleDto){
+        log.info("【修改文章】 参数信息：{}",JsonUtil.toJson(articleDto));
+        if(articleDto.getId()==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        articleService.save(articleDto);
+        return ResultVOUtil.success();
     }
 
     /**
@@ -127,8 +137,6 @@ public class ArticleController {
         }
         return ResultVOUtil.success(articleService.findByCateIds(articleDto.getCateIds()));
     }
-
-
 
 
 }

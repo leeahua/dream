@@ -41,7 +41,7 @@ public class AuthAspect {
      * @author liyaohua
      * Created On 2018/3/1 下午5:29
      */
-    @Pointcut("execution(* com.next.dream.controller.api.ArticleController.*(..)) && @annotation(com.next.dream.annotation.LoginAnnotation)")
+    @Pointcut("execution(* com.next.dream.controller.api.ArticleApiController.*(..)) && @annotation(com.next.dream.annotation.LoginAnnotation)")
     public void authorControllerPointcut(){}
 
     /**
