@@ -67,7 +67,7 @@ public class AuthAspect {
             }else if(obj instanceof BaseRespDto){
                 BaseRespDto baseRespDto = (BaseRespDto) obj;
                 if(baseRespDto.getToken()==null ){
-                    result = ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
+                    result = ResultVOUtil.failed(ResultEnum.USER_TOKEN_EMPTY);
                     break;
                 }
                 if(redisService.get(baseRespDto.getToken())==null){

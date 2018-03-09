@@ -26,6 +26,7 @@ public class RedisService {
     public void set(String key,  Object obj,long timeout, TimeUnit outTime){
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, obj, 10, TimeUnit.SECONDS);
+        log.info("key:{},添加缓存成功",key);
     }
 
     public Object get(String key){
