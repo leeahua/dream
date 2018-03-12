@@ -22,7 +22,7 @@ public interface TagsService {
     ResultVO list();
 
 
-    List<Tags> findByStatus(Integer status);
+    List<Tags> findByStatus(Integer status,TagsDto tagsDto);
 
 
 

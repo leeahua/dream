@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TagsRepository extends JpaRepository<Tags,Integer> {
 
-    List<Tags> findByStatus(Integer status);
+    List<Tags> findByStatusAndUserId(Integer status,Integer userId);
 
 
 }

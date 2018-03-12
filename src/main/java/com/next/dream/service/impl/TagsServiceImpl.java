@@ -63,7 +63,7 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public List<Tags> findByStatus(Integer status) {
-        return tagsRepository.findByStatus(status);
+    public List<Tags> findByStatus(Integer status,TagsDto tagsDto) {
+        return tagsRepository.findByStatusAndUserId(status,tagsDto.getUserId());
     }
 }

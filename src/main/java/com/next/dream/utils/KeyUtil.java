@@ -11,6 +11,7 @@
 package com.next.dream.utils;
 
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * 〈生成code工具类〉
@@ -20,6 +21,24 @@ import java.util.Random;
  * @since 1.0.0
  */
 public class KeyUtil {
+
+    /**
+     * @Description: <br>
+     *  生成随机字符串
+     * @param isDelFlag 是否删除横线
+     * @return
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/3/12 下午4:23
+     */
+    public static String  getUUID(boolean isDelFlag){
+        String uuid = UUID.randomUUID().toString();
+        if(isDelFlag) {
+            uuid = uuid.replace("-", "");
+        }
+        return uuid;
+
+    }
     
     /**
      *   <br>

@@ -5,8 +5,8 @@ import com.next.dream.dto.UserDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.RedisService;
 import com.next.dream.service.UserService;
-import com.next.dream.utils.EnAndDecryptUtils;
 import com.next.dream.utils.JsonUtil;
+import com.next.dream.utils.KeyUtil;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,12 @@ public class UserApiController {
             return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
         }
         //判断是否已经登陆过
-        String token = EnAndDecryptUtils.md5Encrypt(userDto.getUsername());
+        String token;
+        if(userDto.getToken()==null) {
+            token = KeyUtil.getUUID(true);
+        }else{
+            token = userDto.getToken();
+        }
         UserDto user = (UserDto) redisService.get(token);
         if(user != null){
             return ResultVOUtil.success(user);
@@ -74,9 +79,7 @@ public class UserApiController {
         if(userDto.getUsername() == null || userDto.getToken() ==null){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
-        if(!EnAndDecryptUtils.md5Encrypt(userDto.getUsername()).equals(userDto.getToken())){
-            return ResultVOUtil.failed(ResultEnum.USER_TOKEN_UNMATCH);
-        }
+
         UserDto user = (UserDto)redisService.get(userDto.getToken());
 
         if(user!=null){
