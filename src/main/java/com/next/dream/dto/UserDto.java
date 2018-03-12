@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 @Data
-public class UserDto extends BaseRespDto implements Serializable{
+public class UserDto extends BaseDto implements Serializable{
     private static final long serialVersionUID = 2422109234464501490L;
     private Integer id;
     // 用户名

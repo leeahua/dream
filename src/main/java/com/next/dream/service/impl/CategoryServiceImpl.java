@@ -1,6 +1,7 @@
 package com.next.dream.service.impl;
 
 import com.next.dream.domains.Category;
+import com.next.dream.dto.CategoryDto;
 import com.next.dream.enums.CategoryStatusEnum;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.repository.CategoryRepository;
@@ -46,6 +47,36 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdateTime(new Date());
         categoryRepository.save(category);
         return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO addOrUpdate(CategoryDto categoryDto) {
+        Category category;
+        if(categoryDto.getId()!=null){
+            category = categoryRepository.getOne(categoryDto.getId());
+            if(category==null){
+                return ResultVOUtil.failed(ResultEnum.DATA_NOT_EXISTS);
+            }
+            category.setUpdateTime(new Date());
+        }else{
+            category = new Category();
+            category.setStatus(CategoryStatusEnum.ACTIVITY.getCode());
+            category.setCreateTime(new Date());
+        }
+        categoryRepository.save(category);
+        return ResultVOUtil.success();
+
+
+
+
+    }
+
+    @Override
+    public void delete(CategoryDto categoryDto) {
+        Category category = new Category();
+        category.setId(categoryDto.getId());
+        category.setStatus(CategoryStatusEnum.UN_ACTIVITY.getCode());
+        categoryRepository.save(category);
     }
 
 

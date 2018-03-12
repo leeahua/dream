@@ -1,6 +1,7 @@
 package com.next.dream.service;
 
 import com.next.dream.domains.Category;
+import com.next.dream.dto.CategoryDto;
 import com.next.dream.vo.ResultVO;
 
 import java.util.List;
@@ -20,4 +21,10 @@ public interface CategoryService {
     List<Category> findByStatus(Integer status);
 
     ResultVO disableCategory(Integer categoryId);
+
+    ResultVO addOrUpdate(CategoryDto categoryDto);
+
+    void delete(CategoryDto categoryDto);
+
+
 }

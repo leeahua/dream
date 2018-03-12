@@ -14,7 +14,7 @@ import java.util.Date;
  * @version 1.0
  */
 @Data
-public class ArticleDto extends BaseRespDto implements Serializable{
+public class ArticleDto extends BaseDto implements Serializable{
     private static final long serialVersionUID = 3963688354068741748L;
     private Integer id;
     // 标题

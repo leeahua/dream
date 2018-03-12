@@ -34,7 +34,8 @@ public enum ResultEnum {
     USER_TOKEN_UNMATCH("0022", "用户token不匹配"),
     ARTICLE_NOT_EXISTS("0023", "对应文章不存在"),
     CATEGORY_NOT_EXISTS("0024", "类别不存在"),
-    USER_TOKEN_EMPTY("0025", "token为空");
+    USER_TOKEN_EMPTY("0025", "token为空"),
+    DATA_NOT_EXISTS("0026", "需要操作的数据不存在");
 
     private String code;
     private String message;
