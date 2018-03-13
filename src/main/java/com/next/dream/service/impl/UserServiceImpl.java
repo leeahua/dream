@@ -44,9 +44,10 @@ public class UserServiceImpl implements UserService {
         if(user == null){
             return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
         }
-        if(user.getStatus() == UserStatusEnum.ILLEGAL.getCode()){
+        if(user.getStatus() != UserStatusEnum.USER_NORMAL.getCode()){
             return ResultVOUtil.failed(ResultEnum.USER_ILLEGAL);
         }
+
         if(!user.getPassword().equals(EnAndDecryptUtils.md5Encrypt(password))){
             return ResultVOUtil.failed(ResultEnum.USER_PASSWORD_ERROR);
         }
