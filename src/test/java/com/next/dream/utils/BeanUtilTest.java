@@ -32,4 +32,6 @@ public class BeanUtilTest {
         System.out.println(JsonUtil.toJson(user));
     }
 
+
+
 }

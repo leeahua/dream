@@ -32,6 +32,8 @@ spring:
       max-idle: 8
     #链接超市时间 毫秒
     timeout: 0
+  session:
+    store-type: redis
 
 
 banner:
