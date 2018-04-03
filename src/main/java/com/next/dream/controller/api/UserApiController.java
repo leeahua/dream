@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 描述：〈用户控制器〉
@@ -55,6 +56,7 @@ public class UserApiController {
         }
         UserDto user = (UserDto) redisService.get(token);
         if(user != null){
+            redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
             return ResultVOUtil.success(user);
         }
         ResultVO resultVO = userService.login(userDto.getUsername(),userDto.getPassword(),token);

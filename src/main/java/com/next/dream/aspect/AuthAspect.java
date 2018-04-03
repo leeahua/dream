@@ -1,6 +1,6 @@
 package com.next.dream.aspect;
 
-import com.next.dream.dto.BaseRespDto;
+import com.next.dream.dto.BaseDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.RedisService;
 import com.next.dream.utils.JsonUtil;
@@ -14,6 +14,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -61,11 +63,16 @@ public class AuthAspect {
         Object result = null;
         Object[] args = proceedingJoinPoint.getArgs();
         for(Object obj : args){
+            if(obj instanceof HttpServletRequest){
+                HttpServletRequest request = (HttpServletRequest)obj;
+                HttpSession session = request.getSession();
+                log.info("session {}",JsonUtil.toJson(session));
+            }
             if(obj instanceof Map<?,?>){
                 Map<String,Object> map = (Map<String,Object>)obj;
                 params.add(map);
-            }else if(obj instanceof BaseRespDto){
-                BaseRespDto baseRespDto = (BaseRespDto) obj;
+            }else if(obj instanceof BaseDto){
+                BaseDto baseRespDto = (BaseDto) obj;
                 if(baseRespDto.getToken()==null ){
                     result = ResultVOUtil.failed(ResultEnum.USER_TOKEN_EMPTY);
                     break;
@@ -74,8 +81,6 @@ public class AuthAspect {
                     result = ResultVOUtil.failed(ResultEnum.USER_UNLOGIN_ERROR);
                     break;
                 }
-
-
             }else{
                 params.add(args);
             }
