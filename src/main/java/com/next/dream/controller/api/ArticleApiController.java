@@ -44,7 +44,7 @@ public class ArticleApiController {
      * @author liyaohua
      * Created On 2018/3/8 下午5:52
      */
-    @GetMapping("/list")
+    @GetMapping(value = "/list")
     public ResultVO list(){
         log.info("文章列表查询");
         return articleService.findBestList();
@@ -116,10 +116,59 @@ public class ArticleApiController {
     @LoginAnnotation
     public ResultVO findByAuthorId(@RequestBody ArticleDto articleDto){
         log.info("【根据作者信息获取文章】 参数信息:{}", JsonUtil.toJson(articleDto));
-        if(articleDto.getAuthorId() == null){
+        if(articleDto.getAuthorId() == null ){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
         return ResultVOUtil.success(articleService.findByAuthorId(articleDto.getAuthorId()));
+    }
+    /**
+     * @Description: 根据作者id和token获取未发布文章详情 需要验证
+     * @param articleDto
+     * @return ResultVO
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/4/8 下午3:08
+     */
+    @PostMapping("/findDetailByAuthorId")
+    @LoginAnnotation
+    public ResultVO findDetailByAuthodId(@RequestBody ArticleDto articleDto){
+        log.info("【根据作者信息获取文章】 参数信息:{}", JsonUtil.toJson(articleDto));
+        if(articleDto.getAuthorId() == null  || articleDto.getId()==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        ResultEnum resultEnum = checkUser(articleDto,true,null);
+        if(resultEnum!=null){
+            return ResultVOUtil.failed(resultEnum);
+        }
+        return ResultVOUtil.success(articleService.findDetailByAuthorId(articleDto));
+    }
+
+    private ResultEnum checkUser(ArticleDto articleDto,boolean isNeedCheckUser,String[] needCheckParams){
+        if(isNeedCheckUser){
+            UserDto user = (UserDto) redisService.get(articleDto.getToken());
+            if(user.getId().intValue()!=articleDto.getAuthorId().intValue()){
+                return ResultEnum.USER_NOT_MATCH;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @Description: 获取发布的文章详情 不需要登陆
+     * @param articleDto
+     * @return ResultVO
+     * @return
+     * @since  1.0.0
+     * @author liyaohua
+     * Created On 2018/4/8 下午3:19
+     */
+    @PostMapping("/findDetail")
+    public ResultVO findDetail(@RequestBody ArticleDto articleDto){
+        log.info("【根据作者信息获取文章】 参数信息:{}", JsonUtil.toJson(articleDto));
+        if(articleDto.getId()==null){
+            return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
+        }
+        return ResultVOUtil.success(articleService.findById(articleDto.getId()));
     }
     /**
      *

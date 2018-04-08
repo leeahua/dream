@@ -19,6 +19,8 @@ public interface ArticleService {
 
     Article save(ArticleDto articleDto);
 
+    Article findDetailByAuthorId(ArticleDto articleDto);
+
     ResultVO delete(Integer id);
     
     Article findById(Integer id);

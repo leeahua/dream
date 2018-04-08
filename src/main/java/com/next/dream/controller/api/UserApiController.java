@@ -48,6 +48,7 @@ public class UserApiController {
             return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
         }
         //判断是否已经登陆过
+        //TODO 需要防止用户重复登陆 造成过多的session 最好的方式根据用户+ip进行生成随机字符串
         String token;
         if(userDto.getToken()==null) {
             token = KeyUtil.getUUID(true);

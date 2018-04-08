@@ -18,4 +18,6 @@ public interface ArticleRepository extends JpaRepository<Article,Integer>{
 
     List<Article> findByCateIds(String cateId);
 
+    Article findByAuthorIdAndId(Integer authorId,Integer id);
+
 }

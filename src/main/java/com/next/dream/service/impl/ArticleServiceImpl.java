@@ -55,6 +55,12 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
+    public Article findDetailByAuthorId(ArticleDto articleDto) {
+        Article article = articleRepository.findByAuthorIdAndId(articleDto.getAuthorId(),articleDto.getId());
+        return article;
+    }
+
+    @Override
     public ResultVO delete(Integer id) {
         Article article = articleRepository.findOne(id);
         if(article == null){
