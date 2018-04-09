@@ -58,6 +58,7 @@ public class AuthAspect {
         Method method = methodSignature.getMethod();
         //获取被拦截的方法的名字
         String methodName = method.getName();
+
         Set<Object> params = new LinkedHashSet<>();
         log.info("请求开始，请求方法：{}",methodName);
         Object result = null;

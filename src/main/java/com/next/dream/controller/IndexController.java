@@ -1,7 +1,6 @@
 package com.next.dream.controller;
 
 
-import com.next.dream.utils.JsonUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,12 +21,10 @@ public class IndexController {
         Map<String,String> data = new HashMap<>();
         data.put("aaa","1234");
         data.put("bbb","5678");
-        System.out.println(request.getSession().getId()+"---"+ JsonUtil.toJson(request.getSession().getAttribute("boot")));
-        if(request.getSession().getAttribute("boot")==null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("boot", data);
-        }
-        System.out.println(request.getSession().getId()+"---"+ JsonUtil.toJson(request.getSession().getAttribute("boot")));
+        HttpSession session = request.getSession();
+//        System.out.println(request.getSession().getId()+"---"+ JsonUtil.toJson(request.getSession()));
+
+  //      System.out.println(request.getSession().getId()+"---"+ JsonUtil.toJson(request.getSession()));
         return data;
     }
 

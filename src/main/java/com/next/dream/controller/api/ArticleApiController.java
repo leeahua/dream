@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -92,7 +91,7 @@ public class ArticleApiController {
      */
     @PostMapping("/delete")
     @LoginAnnotation
-    public ResultVO delete(@RequestBody ArticleDto articleDto, HttpServletRequest request){
+    public ResultVO delete(@RequestBody ArticleDto articleDto){
         log.info("【删除文章】 参数信息：{}",JsonUtil.toJson(articleDto));
         if(articleDto.getId()==null || StringUtils.isBlank(articleDto.getToken())
                 ||StringUtils.isBlank(articleDto.getAuthorName())){

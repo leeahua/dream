@@ -22,6 +22,7 @@ public class RedisService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    private final long TIME_OUT = 60*60; //一个小时 秒
 
     public void set(String key,  Object obj,long timeout, TimeUnit outTime){
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();

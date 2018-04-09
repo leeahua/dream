@@ -48,18 +48,30 @@ public class UserApiController {
             return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
         }
         //判断是否已经登陆过
-        //TODO 需要防止用户重复登陆 造成过多的session 最好的方式根据用户+ip进行生成随机字符串
-        String token;
+        //TODO 需要防止用户重复登陆 造成过多的session
+        //判断该用户是否已经登陆过，如果登陆过则用已有的session，否则 新增session
+
+        String token = (String)redisService.get(userDto.getUsername());
+
         if(userDto.getToken()==null) {
-            token = KeyUtil.getUUID(true);
+            if(token==null){
+                log.info("用户登陆,token：{}",token);
+                token = KeyUtil.getUUID(true);
+            }else{
+                log.info("用户已有登陆session,token：{}",token);
+                UserDto user = (UserDto) redisService.get(token);
+                if(user != null){
+                    //TODO 用户的token有效期需要配置化
+                    redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
+                    redisService.set(userDto.getUsername(),token,59, TimeUnit.MINUTES); //默认一个小时
+                    return ResultVOUtil.success(user);
+                }
+            }
+
         }else{
             token = userDto.getToken();
         }
-        UserDto user = (UserDto) redisService.get(token);
-        if(user != null){
-            redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
-            return ResultVOUtil.success(user);
-        }
+
         ResultVO resultVO = userService.login(userDto.getUsername(),userDto.getPassword(),token);
         return resultVO;
     }
@@ -72,6 +84,7 @@ public class UserApiController {
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
         redisService.remove(userDto.getToken());
+        redisService.remove(userDto.getUsername());
         return ResultVOUtil.success();
     }
 

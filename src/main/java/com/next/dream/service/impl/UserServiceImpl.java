@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassword(null);
         userDto.setToken(token);
         redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
+        redisService.set(username,token,59, TimeUnit.MINUTES);
         return ResultVOUtil.success(userDto);
     }
 
@@ -158,4 +159,7 @@ public class UserServiceImpl implements UserService {
         }
         log.info("验证邮件发送成功！email:{}",user.getEmail());
     }
+
+
+
 }
