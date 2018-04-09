@@ -64,6 +64,7 @@ public class UserApiController {
                     //TODO 用户的token有效期需要配置化
                     redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
                     redisService.set(userDto.getUsername(),token,59, TimeUnit.MINUTES); //默认一个小时
+                    user.setToken(token);
                     return ResultVOUtil.success(user);
                 }
             }
