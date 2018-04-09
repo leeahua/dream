@@ -6,7 +6,6 @@ import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.RedisService;
 import com.next.dream.service.UserService;
 import com.next.dream.utils.JsonUtil;
-import com.next.dream.utils.KeyUtil;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 描述：〈用户控制器〉
@@ -47,33 +45,7 @@ public class UserApiController {
         if(result.hasErrors()){
             return new ResultVO(ResultEnum.PARAM_ERROR.getCode(), ResultVOUtil.getMsg(result));
         }
-        //判断是否已经登陆过
-        //TODO 需要防止用户重复登陆 造成过多的session
-        //判断该用户是否已经登陆过，如果登陆过则用已有的session，否则 新增session
-
-        String token = (String)redisService.get(userDto.getUsername());
-
-        if(userDto.getToken()==null) {
-            if(token==null){
-                log.info("用户登陆,token：{}",token);
-                token = KeyUtil.getUUID(true);
-            }else{
-                log.info("用户已有登陆session,token：{}",token);
-                UserDto user = (UserDto) redisService.get(token);
-                if(user != null){
-                    //TODO 用户的token有效期需要配置化
-                    redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
-                    redisService.set(userDto.getUsername(),token,59, TimeUnit.MINUTES); //默认一个小时
-                    user.setToken(token);
-                    return ResultVOUtil.success(user);
-                }
-            }
-
-        }else{
-            token = userDto.getToken();
-        }
-
-        ResultVO resultVO = userService.login(userDto.getUsername(),userDto.getPassword(),token);
+        ResultVO resultVO = userService.login(userDto);
         return resultVO;
     }
 

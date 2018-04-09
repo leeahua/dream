@@ -2,6 +2,7 @@ package com.next.dream.utils;
 
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.vo.ResultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -15,6 +16,7 @@ import java.util.Locale;
  * @create 2018/1/31
  * @since 1.0.0
  */
+@Slf4j
 public class ResultVOUtil {
 
     private static final Locale LOCALE = Locale.getDefault();
@@ -46,6 +48,7 @@ public class ResultVOUtil {
      */
 
     public static ResultVO success(Object data){
+        log.info("接受数据：{}",JsonUtil.toJson(data));
         ResultVO resultVO = new ResultVO();
         resultVO.setCode(ResultEnum.SUCCESS.getCode());
         resultVO.setMsg(ResultEnum.SUCCESS.getMessage());

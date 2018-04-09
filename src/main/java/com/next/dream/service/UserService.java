@@ -14,11 +14,10 @@ public interface UserService {
 
     /**
      * 登陆处理
-     * @param username
-     * @param password
+     * @param userDto
      * @return ResultVO 结果集
      * */
-    ResultVO login(String username, String password,String token);
+    ResultVO login(UserDto userDto);
 
     /**
      * 注册处理
