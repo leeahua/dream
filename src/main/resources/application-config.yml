@@ -1,5 +1,2 @@
 spring:
   profiles: config
-upload:
-  path: /user/liyaohua/temp
-  format: jpg,jpeg,gif,png,ico,bmp

@@ -66,6 +66,9 @@ spring:
       url: jdbc:mysql://127.0.0.1:3306/dream?characterEncoding=utf-8&useSSL=false
 server:
   port: 8080
+upload:
+  path: /Users/liyaohua/images/
+  format: jpg,jpeg,gif,png,ico,bmp
 
 ---
 spring:
@@ -77,3 +80,6 @@ spring:
       url: jdbc:mysql://127.0.0.1:3306/sell?characterEncoding=utf-8&useSSL=false
 server:
   port: 8080
+upload:
+  path: /usr/local/images/
+  format: jpg,jpeg,gif,png,ico,bmp
