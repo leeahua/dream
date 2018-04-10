@@ -1,6 +1,7 @@
 package com.next.dream.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class UserDto extends BaseDto implements Serializable{
     private static final long serialVersionUID = 2422109234464501490L;
     private Integer id;

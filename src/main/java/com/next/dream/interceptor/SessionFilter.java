@@ -1,4 +1,4 @@
-package com.next.dream.filter;
+package com.next.dream.interceptor;
 
 
 import org.springframework.web.context.support.HttpRequestHandlerServlet;

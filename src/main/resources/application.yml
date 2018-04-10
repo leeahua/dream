@@ -11,7 +11,6 @@ spring:
   jpa:
       open-in-view: true
       show-sql: true
-
   redis:
     #数据库索引
     database: 0
@@ -34,7 +33,12 @@ spring:
     timeout: 0
   session:
     store-type: redis
-
+  http:
+    multipart:
+      max-file-size: 3Mb
+      max-request-size: 10Mb
+  aop:
+    proxy-target-class: true
 
 banner:
   location: static/banner.txt

@@ -14,8 +14,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -64,11 +62,6 @@ public class AuthAspect {
         Object result = null;
         Object[] args = proceedingJoinPoint.getArgs();
         for(Object obj : args){
-            if(obj instanceof HttpServletRequest){
-                HttpServletRequest request = (HttpServletRequest)obj;
-                HttpSession session = request.getSession();
-                log.info("session {}",JsonUtil.toJson(session));
-            }
             if(obj instanceof Map<?,?>){
                 Map<String,Object> map = (Map<String,Object>)obj;
                 params.add(map);

@@ -36,7 +36,10 @@ public enum ResultEnum {
     CATEGORY_NOT_EXISTS("0024", "类别不存在"),
     USER_TOKEN_EMPTY("0025", "token为空"),
     DATA_NOT_EXISTS("0026", "需要操作的数据不存在"),
-    USER_NOT_MATCH("0027","用户不匹配");
+    USER_NOT_MATCH("0027","用户不匹配"),
+    FILE_READ_ERROR("0028", "文件读取异常"),
+    FILE_SIZE_ERROR("0029", "文件超过设置的最大限制"),
+    FILE_UNSUPPORY_ERROR("0030", "文件格式不支持");
 
     private String code;
     private String message;
