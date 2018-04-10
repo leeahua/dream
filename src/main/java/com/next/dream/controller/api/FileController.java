@@ -1,10 +1,12 @@
 package com.next.dream.controller.api;
 
+import com.next.dream.config.FileProperConfig;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.utils.FileUtils;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +28,8 @@ import java.util.Map;
 @Slf4j
 public class FileController {
 
-    private static final String UP_PATH = "/Users/liyaohua/temp/";
+    @Autowired
+    private FileProperConfig fileProperConfig;
 
     /**
      * @Description: <br>
@@ -40,7 +43,7 @@ public class FileController {
     public ResultVO upload(@RequestParam("file") MultipartFile file){
         log.info("【文件上传】file type:{},file name :{}",file.getContentType(),file.getName());
         try {
-            String filePath = FileUtils.saveByteToFilePath(file.getBytes(),UP_PATH,file.getOriginalFilename());
+            String filePath = FileUtils.saveByteToFilePath(file.getBytes(),fileProperConfig.getPath(),file.getOriginalFilename());
             Map<String,String> data = new HashMap<>(1);
             data.put("filePath",filePath);
             return ResultVOUtil.success(data);
