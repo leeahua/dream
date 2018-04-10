@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: test
+    include: config
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
@@ -39,6 +40,8 @@ spring:
       max-request-size: 10Mb
   aop:
     proxy-target-class: true
+
+
 
 banner:
   location: static/banner.txt
