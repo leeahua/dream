@@ -145,7 +145,11 @@ public class ArticleApiController {
     private ResultEnum checkUser(ArticleDto articleDto,boolean isNeedCheckUser,String[] needCheckParams){
         if(isNeedCheckUser){
             UserDto user = (UserDto) redisService.get(articleDto.getToken());
-            if(user.getId().intValue()!=articleDto.getAuthorId().intValue()){
+            log.info("user:{}",user);
+            if(user==null){
+                return ResultEnum.USER_UNLOGIN_ERROR;
+            }
+            if(user!=null && user.getId().intValue()!=articleDto.getAuthorId().intValue()){
                 return ResultEnum.USER_NOT_MATCH;
             }
         }
