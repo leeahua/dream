@@ -26,7 +26,7 @@ public class FileInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("文件拦截器启动...当前session：{}",request.getSession()==null?null:request.getSession().getId());
+        log.info("文件拦截器启动...");
         MultipartResolver multipartResolver = new CommonsMultipartResolver();
         if(multipartResolver.isMultipart(request)){
             log.info("请求中含有附件，开始校验...");

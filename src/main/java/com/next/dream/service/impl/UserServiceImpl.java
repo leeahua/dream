@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
                 log.info("用户登陆,token：{}",token);
                 token = KeyUtil.getUUID(true);
             }else{
-                log.info("用户已有登陆session,token：{}",token);
+                log.info("用户已有登陆,token：{}",token);
                 UserDto user = (UserDto) redisService.get(token);
                 if(user != null){
                     redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时

@@ -35,15 +35,15 @@
 			<scope>provided</scope>
 		</dependency>
 		<!--aop依赖包-->
-		<!-- 添加 spring-session-redis模块-->
-		<dependency>
+		<!-- 添加 spring-session-redis模块 去除 session的饮用-->
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-data-redis</artifactId>
-		</dependency>
+		</dependency>-->
         <!--spring-session-redis模块依赖结束-->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
