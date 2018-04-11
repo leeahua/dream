@@ -45,27 +45,6 @@ public class UserServiceImpl implements UserService {
         //判断是否已经登陆过
         //TODO 需要防止用户重复登陆 造成过多的session
         //判断该用户是否已经登陆过，如果登陆过则用已有的session，否则 新增session
-
-        String token = (String)redisService.get(username);
-        if(userDto.getToken()==null) {
-            if(token==null){
-                log.info("用户登陆,token：{}",token);
-                token = KeyUtil.getUUID(true);
-            }else{
-                log.info("用户已有登陆,token：{}",token);
-                UserDto user = (UserDto) redisService.get(token);
-                if(user != null){
-                    redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
-                    redisService.set(userDto.getUsername(),token,59, TimeUnit.MINUTES); //默认一个小时
-                    user.setToken(token);
-                    return ResultVOUtil.success(user);
-                }
-            }
-
-        }else{
-            token = userDto.getToken();
-        }
-
         User user = userRepository.findByUsername(username);
         if(user == null){
             return ResultVOUtil.failed(ResultEnum.USER_NOT_EXISTS);
@@ -80,9 +59,26 @@ public class UserServiceImpl implements UserService {
         UserDto result = new UserDto();
         BeanUtils.copyProperties(user,result);
         result.setPassword(null);
+
+        String token = (String)redisService.get(username);
+        if(userDto.getToken()==null) {
+            if(token==null){
+                log.info("用户登陆,token：{}",token);
+                token = KeyUtil.getUUID(true);
+            }else{
+                log.info("用户已有登陆,token：{}",token);
+                UserDto cacheUser = (UserDto) redisService.get(token);
+                if(cacheUser != null){
+                    redisService.set(token,userDto,60, TimeUnit.MINUTES); //默认一个小时
+                    redisService.set(userDto.getUsername(),token,59, TimeUnit.MINUTES); //默认一个小时
+                    cacheUser.setToken(token);
+                    return ResultVOUtil.success(cacheUser);
+                }
+            }
+        }else{
+            token = userDto.getToken();
+        }
         result.setToken(token);
-        redisService.set(token,result,60, TimeUnit.MINUTES); //默认一个小时
-        redisService.set(username,token,59, TimeUnit.MINUTES);
         log.info("返回前：{}",JsonUtil.toJson(result));
         return ResultVOUtil.success(result);
     }
