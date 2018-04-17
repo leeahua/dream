@@ -1,15 +1,18 @@
 package com.next.dream.service.impl;
 
-import com.next.dream.repository.ArticleRepository;
 import com.next.dream.domains.Article;
 import com.next.dream.dto.ArticleDto;
 import com.next.dream.enums.ResultEnum;
+import com.next.dream.repository.ArticleRepository;
 import com.next.dream.service.ArticleService;
 import com.next.dream.utils.ResultVOUtil;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -30,9 +33,16 @@ public class ArticleServiceImpl implements ArticleService{
     private ArticleRepository articleRepository;
 
     @Override
-    public List<Article> findByAuthorId(Integer authorId) {
-        return articleRepository.findByAuthorId(authorId);
+    public Page<Article> findByAuthorId(ArticleDto articleDto) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleDto,article);
+        Pageable pageable = new PageRequest(((articleDto.getNo()==null || articleDto.getNo()-1<0)?0:articleDto.getNo()-1)*articleDto.getSize()
+                , (articleDto.getNo()==null?1:articleDto.getNo())*articleDto.getSize());
+        Page<Article> pages = articleRepository.findByAuthorIdAndStatus(articleDto.getAuthorId(),articleDto.getStatus(),pageable);
+        return pages;
     }
+
+
 
     @Override
     public List<Article> findByCateIds(String cateId) {
@@ -56,6 +66,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Article findDetailByAuthorId(ArticleDto articleDto) {
+
         Article article = articleRepository.findByAuthorIdAndId(articleDto.getAuthorId(),articleDto.getId());
         return article;
     }

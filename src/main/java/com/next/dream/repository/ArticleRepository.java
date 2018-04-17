@@ -1,6 +1,8 @@
 package com.next.dream.repository;
 
 import com.next.dream.domains.Article;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -19,5 +21,8 @@ public interface ArticleRepository extends JpaRepository<Article,Integer>{
     List<Article> findByCateIds(String cateId);
 
     Article findByAuthorIdAndId(Integer authorId,Integer id);
+
+    Page<Article> findByAuthorIdAndStatus(Integer authorId , Integer status, Pageable pageable);
+
 
 }

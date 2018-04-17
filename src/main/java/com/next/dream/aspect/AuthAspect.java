@@ -3,7 +3,6 @@ package com.next.dream.aspect;
 import com.next.dream.dto.BaseDto;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.service.RedisService;
-import com.next.dream.utils.JsonUtil;
 import com.next.dream.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -89,7 +88,7 @@ public class AuthAspect {
             }
 
         }
-        log.info("请求结果：{}", JsonUtil.toJson(result));
+       // log.info("请求结果：{}", JsonUtil.toJson(result));
         return result;
     }
 

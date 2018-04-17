@@ -3,6 +3,7 @@ package com.next.dream.service;
 import com.next.dream.domains.Article;
 import com.next.dream.dto.ArticleDto;
 import com.next.dream.vo.ResultVO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    List<Article> findByAuthorId(Integer authorId);
+
+    Page<Article> findByAuthorId(ArticleDto articleDto);
 
     List<Article> findByCateIds(String cateId);
 

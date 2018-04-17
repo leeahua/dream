@@ -16,4 +16,7 @@ public class BaseDto implements Serializable {
 
     private static final long serialVersionUID = -4201684362407432547L;
     private String token;
+    private Integer no;
+    private Integer size = 3;
+
 }

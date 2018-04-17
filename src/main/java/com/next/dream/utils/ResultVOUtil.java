@@ -3,11 +3,14 @@ package com.next.dream.utils;
 import com.next.dream.enums.ResultEnum;
 import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * 描述：〈响应信息封装〉
@@ -48,7 +51,23 @@ public class ResultVOUtil {
      */
 
     public static ResultVO success(Object data){
-        log.info("接受数据：{}",JsonUtil.toJson(data));
+        if(data instanceof Page){
+            //则格式化Page
+            Page page = (Page)data;
+            Map<String,Object> dataMap = new HashMap<>();
+            dataMap.put("rows",page.getContent());
+            dataMap.put("no",page.getNumber());
+            dataMap.put("size",page.getSize());
+            dataMap.put("firstPage",page.isFirst());
+            dataMap.put("endPage",page.isLast());
+            dataMap.put("pageCount",page.getTotalPages());
+            dataMap.put("rowCount",page.getTotalElements());
+            ResultVO resultVO = new ResultVO();
+            resultVO.setCode(ResultEnum.SUCCESS.getCode());
+            resultVO.setMsg(ResultEnum.SUCCESS.getMessage());
+            resultVO.setData(dataMap);
+            return resultVO;
+        }
         ResultVO resultVO = new ResultVO();
         resultVO.setCode(ResultEnum.SUCCESS.getCode());
         resultVO.setMsg(ResultEnum.SUCCESS.getMessage());

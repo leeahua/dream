@@ -13,6 +13,7 @@ import com.next.dream.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,7 +119,8 @@ public class ArticleApiController {
         if(articleDto.getAuthorId() == null ){
             return ResultVOUtil.failed(ResultEnum.PARAM_ERROR);
         }
-        return ResultVOUtil.success(articleService.findByAuthorId(articleDto.getAuthorId()));
+        Page<Article> pages = articleService.findByAuthorId(articleDto);
+        return ResultVOUtil.success(pages);
     }
     /**
      * @Description: 根据作者id和token获取未发布文章详情 需要验证

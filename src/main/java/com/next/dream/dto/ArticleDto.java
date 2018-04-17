@@ -45,4 +45,5 @@ public class ArticleDto extends BaseDto implements Serializable{
     private String summary;
     private Integer viewCount;
     private Integer commentCount;
+    private PageDto pageDto;
 }
