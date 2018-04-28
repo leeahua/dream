@@ -36,9 +36,15 @@ public class ArticleServiceImpl implements ArticleService{
     public Page<Article> findByAuthorId(ArticleDto articleDto) {
         Article article = new Article();
         BeanUtils.copyProperties(articleDto,article);
-        Pageable pageable = new PageRequest(((articleDto.getNo()==null || articleDto.getNo()-1<0)?0:articleDto.getNo()-1)*articleDto.getSize()
-                , (articleDto.getNo()==null?1:articleDto.getNo())*articleDto.getSize());
-        Page<Article> pages = articleRepository.findByAuthorIdAndStatus(articleDto.getAuthorId(),articleDto.getStatus(),pageable);
+        Pageable pageable = new PageRequest(articleDto.getNo()==null?0:articleDto.getNo()
+                , articleDto.getSize()==null?5:articleDto.getSize());
+        Page<Article> pages ;
+        if(articleDto.getStatus()!=null) {
+            pages = articleRepository.findByAuthorIdAndStatus(articleDto.getAuthorId(), articleDto.getStatus(), pageable);
+        }else{
+            pages = articleRepository.findByAuthorId(articleDto.getAuthorId(), pageable);
+        }
+
         return pages;
     }
 
@@ -87,8 +93,8 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public ResultVO findBestList() {
-        List<Article> data = articleRepository.findAll();
-        return ResultVOUtil.success(data);
+    public Page<Article> findBestList(Pageable pageable) {
+        Page<Article> data = articleRepository.findAll(pageable);
+        return data;
     }
 }

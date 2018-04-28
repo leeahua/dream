@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,9 +47,10 @@ public class ArticleApiController {
      * Created On 2018/3/8 下午5:52
      */
     @GetMapping(value = "/list")
-    public ResultVO list(){
-        log.info("文章列表查询");
-        return articleService.findBestList();
+    public ResultVO list(@RequestParam(value = "size",defaultValue = "3")Integer size,@RequestParam(value = "no",defaultValue = "0")Integer no){
+        Pageable pageable = new PageRequest(no,size);
+        log.info("文章列表查询:size:{},no:{}",size,no);
+        return ResultVOUtil.success(articleService.findBestList(pageable));
     }
     /**
      * 添加文章
